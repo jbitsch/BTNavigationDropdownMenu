@@ -38,6 +38,14 @@ public class BTNavigationDropdownMenu: UIView {
             self.configuration.menuTitleColor = value
         }
     }
+    public var suggestionColors : [UIColor] {
+        get {
+            return self.configuration.suggestionColors
+        }
+        set(value) {
+            self.configuration.suggestionColors = value
+        }
+    }
     
     // The height of the cell. Default is 50
     public var cellHeight: CGFloat! {
@@ -430,6 +438,7 @@ class BTConfiguration {
     var animationDuration: NSTimeInterval!
     var maskBackgroundColor: UIColor!
     var maskBackgroundOpacity: CGFloat!
+    var suggestionColors: [UIColor]!
     
     init() {
         self.defaultValue()
@@ -459,6 +468,7 @@ class BTConfiguration {
         self.arrowPadding = 15
         self.maskBackgroundColor = UIColor.blackColor()
         self.maskBackgroundOpacity = 0.3
+        self.suggestionColors = []
     }
 }
 
@@ -517,6 +527,9 @@ class BTTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = BTTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "Cell", configuration: self.configuration)
         cell.textLabel?.text = self.items[indexPath.row] as? String
+        if configuration.suggestionColors.count == items.count {
+            cell.textLabel?.textColor = configuration.suggestionColors[indexPath.row]
+        }
         cell.checkmarkIcon.hidden = (indexPath.row == selectedIndexPath) ? false : true
         if self.configuration.keepSelectedCellColor == true {
             cell.contentView.backgroundColor = (indexPath.row == selectedIndexPath) ? self.configuration.cellSelectionColor : self.configuration.cellBackgroundColor
