@@ -244,7 +244,7 @@ public class BTNavigationDropdownMenu: UIView {
         self.addSubview(self.menuButton)
 
         self.menuTitle = UILabel(frame: frame)
-        self.menuTitle.text = title
+        //self.menuTitle.text = title
         self.menuTitle.textColor = self.menuTitleColor
         self.menuTitle.font = self.configuration.cellTextLabelFont
         self.menuTitle.textAlignment = self.configuration.cellTextLabelAlignment
@@ -429,7 +429,7 @@ public class BTNavigationDropdownMenu: UIView {
     }
     
     func setMenuTitle(title: String) {
-        self.menuTitle.text = title
+        //self.menuTitle.text = title
     }
     
     func menuButtonTapped(sender: UIButton) {
