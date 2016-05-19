@@ -38,6 +38,25 @@ public class BTNavigationDropdownMenu: UIView {
             self.configuration.menuTitleColor = value
         }
     }
+    
+    public var mainTitle : NSMutableAttributedString {
+        get {
+            return self.configuration.mainTitle
+        }
+        set(value) {
+            self.configuration.mainTitle = value
+        }
+    }
+    
+    public var subTitle : NSMutableAttributedString {
+        get {
+            return self.configuration.subTitle
+        }
+        set(value) {
+            self.configuration.subTitle = value
+        }
+    }
+    
     public var suggestionColors : [UIColor] {
         get {
             return self.configuration.suggestionColors
@@ -194,7 +213,7 @@ public class BTNavigationDropdownMenu: UIView {
     private var configuration = BTConfiguration()
     private var topSeparator: UIView!
     private var menuButton: UIButton!
-    private var menuTitle: UILabel!
+    //private var menuTitle: UILabel!
     private var menuArrow: UIImageView!
     private var backgroundView: UIView!
     private var tableView: BTTableView!
@@ -238,15 +257,24 @@ public class BTNavigationDropdownMenu: UIView {
         self.menuButton.addTarget(self, action: #selector(BTNavigationDropdownMenu.menuButtonTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(self.menuButton)
 
-        self.menuTitle = UILabel(frame: frame)
-        self.menuTitle.text = title
-        self.menuTitle.textColor = self.menuTitleColor
-        self.menuTitle.font = self.configuration.cellTextLabelFont
-        self.menuTitle.textAlignment = self.configuration.cellTextLabelAlignment
-        self.menuButton.addSubview(self.menuTitle)
+        //self.menuTitle = UILabel(frame: frame)
+        //self.menuTitle.text = title
+        //self.menuTitle.textColor = self.menuTitleColor
+        //self.menuTitle.font = self.configuration.cellTextLabelFont
+        //self.menuTitle.textAlignment = self.configuration.cellTextLabelAlignment
+        //self.menuButton.addSubview(self.menuTitle)
 
         self.menuArrow = UIImageView(image: self.configuration.arrowImage)
         self.menuButton.addSubview(self.menuArrow)
+        
+        //appending both attributed strings
+        var title = selg.mainTitle
+        title.appendAttributedString(self.subTitle)
+        
+        self.menuButton.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping;
+        self.menuButton.titleLabel?.textAlignment = .Center
+        self.menuButton.setAttributedTitle(title, forState: UIControlState.Normal)
+        
         
         let window = UIApplication.sharedApplication().keyWindow!
         let menuWrapperBounds = window.bounds
@@ -438,7 +466,11 @@ class BTConfiguration {
     var animationDuration: NSTimeInterval!
     var maskBackgroundColor: UIColor!
     var maskBackgroundOpacity: CGFloat!
+    
+    /*Custom properties*/
     var suggestionColors: [UIColor]!
+    var mainTitle : NSMutableAttributedString!
+    var subTitle : NSMutableAttributedString!
     
     init() {
         self.defaultValue()
@@ -468,7 +500,12 @@ class BTConfiguration {
         self.arrowPadding = 15
         self.maskBackgroundColor = UIColor.blackColor()
         self.maskBackgroundOpacity = 0.3
+        
         self.suggestionColors = []
+        
+        self.mainTitle = NSMutableAttributedString()
+        self.subTitle = NSMutableAttributedString()
+        
     }
 }
 
