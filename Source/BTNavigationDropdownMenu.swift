@@ -270,7 +270,7 @@ public class BTNavigationDropdownMenu: UIView {
         self.backgroundView.backgroundColor = self.configuration.maskBackgroundColor
         self.backgroundView.autoresizingMask = [ .FlexibleWidth, .FlexibleHeight ]
         
-        let backgroundTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(BTNavigationDropdownMenu.hideMenu));
+        let backgroundTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(BTNavigationDropdownMenu.hideClick));
         self.backgroundView.addGestureRecognizer(backgroundTapRecognizer)
         
         // Init table view
@@ -334,6 +334,12 @@ public class BTNavigationDropdownMenu: UIView {
         self.cellBackgroundColor = self.navigationController?.navigationBar.barTintColor
         self.cellSeparatorColor = self.navigationController?.navigationBar.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor
         self.cellTextLabelColor = self.navigationController?.navigationBar.titleTextAttributes?[NSForegroundColorAttributeName] as? UIColor
+    }
+    
+    func hideClick()
+    {
+        self.didSelectItemAtIndexHandler!(indexPath: -1)
+        self.hideMenu()
     }
     
     func showMenu() {
