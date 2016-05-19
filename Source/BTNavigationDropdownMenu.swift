@@ -39,24 +39,6 @@ public class BTNavigationDropdownMenu: UIView {
         }
     }
     
-    public var mainTitle : NSMutableAttributedString {
-        get {
-            return self.configuration.mainTitle
-        }
-        set(value) {
-            self.configuration.mainTitle = value
-        }
-    }
-    
-    public var subTitle : NSMutableAttributedString {
-        get {
-            return self.configuration.subTitle
-        }
-        set(value) {
-            self.configuration.subTitle = value
-        }
-    }
-    
     public var suggestionColors : [UIColor] {
         get {
             return self.configuration.suggestionColors
@@ -213,12 +195,15 @@ public class BTNavigationDropdownMenu: UIView {
     private var configuration = BTConfiguration()
     private var topSeparator: UIView!
     private var menuButton: UIButton!
-    //private var menuTitle: UILabel!
+    private var menuTitle: UILabel!
     private var menuArrow: UIImageView!
     private var backgroundView: UIView!
     private var tableView: BTTableView!
     private var items: [AnyObject]!
     private var menuWrapper: UIView!
+    private var mainTitle : NSMutableAttributedString!
+    private var subTitle : NSMutableAttributedString!
+    
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -228,8 +213,9 @@ public class BTNavigationDropdownMenu: UIView {
     public convenience init(title: String, items: [AnyObject]) {
         self.init(navigationController: nil, title: title, items: items)
     }
-    
+
     public init(navigationController: UINavigationController? = nil, title: String, items: [AnyObject]) {
+
         
         // Navigation controller
         if let navigationController = navigationController {
@@ -257,23 +243,18 @@ public class BTNavigationDropdownMenu: UIView {
         self.menuButton.addTarget(self, action: #selector(BTNavigationDropdownMenu.menuButtonTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         self.addSubview(self.menuButton)
 
-        //self.menuTitle = UILabel(frame: frame)
-        //self.menuTitle.text = title
-        //self.menuTitle.textColor = self.menuTitleColor
-        //self.menuTitle.font = self.configuration.cellTextLabelFont
-        //self.menuTitle.textAlignment = self.configuration.cellTextLabelAlignment
-        //self.menuButton.addSubview(self.menuTitle)
-
+        self.menuTitle = UILabel(frame: frame)
+        self.menuTitle.text = title
+        self.menuTitle.textColor = self.menuTitleColor
+        self.menuTitle.font = self.configuration.cellTextLabelFont
+        self.menuTitle.textAlignment = self.configuration.cellTextLabelAlignment
+        self.menuButton.addSubview(self.menuTitle)
+        self.menuTitle.hidden = true
+        
         self.menuArrow = UIImageView(image: self.configuration.arrowImage)
         self.menuButton.addSubview(self.menuArrow)
         
         //appending both attributed strings
-        var title = selg.mainTitle
-        title.appendAttributedString(self.subTitle)
-        
-        self.menuButton.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping;
-        self.menuButton.titleLabel?.textAlignment = .Center
-        self.menuButton.setAttributedTitle(title, forState: UIControlState.Normal)
         
         
         let window = UIApplication.sharedApplication().keyWindow!
@@ -323,7 +304,7 @@ public class BTNavigationDropdownMenu: UIView {
         self.menuTitle.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2)
         self.menuTitle.textColor = self.configuration.menuTitleColor
         self.menuArrow.sizeToFit()
-        self.menuArrow.center = CGPointMake(CGRectGetMaxX(self.menuTitle.frame) + self.configuration.arrowPadding, self.frame.size.height/2)
+        self.menuArrow.center = CGPointMake(CGRectGetMaxX(self.menuTitle.frame) + self.configuration.arrowPadding, (self.frame.size.height/2)+10)
         self.menuWrapper.frame.origin.y = self.navigationController!.navigationBar.frame.maxY
         self.tableView.reloadData()
     }

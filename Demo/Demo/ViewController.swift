@@ -15,7 +15,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         let items = ["Most Popular", "Latest", "Trending", "Nearest", "Top Picks"]
+
         let colors = [UIColor.blueColor(), UIColor.greenColor(),UIColor.redColor(),UIColor.yellowColor(), UIColor.blueColor()]
         self.selectedCellLabel.text = items.first
         self.navigationController?.navigationBar.translucent = false
@@ -39,6 +41,8 @@ class ViewController: UIViewController {
             print("Did select item at index: \(indexPath)")
             self.selectedCellLabel.text = items[indexPath]
         }
+        
+        
         
         self.navigationItem.titleView = menuView
     }
