@@ -214,7 +214,7 @@ public class BTNavigationDropdownMenu: UIView {
         self.init(navigationController: nil, title: title, items: items)
     }
 
-    public init(navigationController: UINavigationController? = nil, title: String, items: [AnyObject]) {
+    public init(navigationController: UINavigationController? = nil, title: String, items: [AnyObject], customFrame : CGRect? = nil) {
 
         
         // Navigation controller
@@ -228,7 +228,10 @@ public class BTNavigationDropdownMenu: UIView {
         let titleSize = (title as NSString).sizeWithAttributes([NSFontAttributeName:self.configuration.cellTextLabelFont])
         
         // Set frame
-        let frame = CGRectMake(0, 0, titleSize.width + (self.configuration.arrowPadding + self.configuration.arrowImage.size.width)*2, self.navigationController!.navigationBar.frame.height)
+        var frame = CGRectMake(0, 0, titleSize.width + (self.configuration.arrowPadding + self.configuration.arrowImage.size.width)*2, self.navigationController!.navigationBar.frame.height)
+        if customFrame != nil {
+            frame = customFrame!
+        }
         
         super.init(frame:frame)
         
